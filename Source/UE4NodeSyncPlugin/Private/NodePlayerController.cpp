@@ -58,9 +58,6 @@ void ANodePlayerController::SetupInputComponent()
 	InputComponent->BindAction("SetDestination", IE_Pressed, this, &ANodePlayerController::OnSetDestinationPressed);
 	InputComponent->BindAction("SetDestination", IE_Released, this, &ANodePlayerController::OnSetDestinationReleased);
 
-
-	InputComponent->BindAction("myMouserRB", IE_Released, this, &ANodePlayerController::onMouseRBClick);
-
 	// support touch devices
 	InputComponent->BindTouch(EInputEvent::IE_Pressed, this, &ANodePlayerController::MoveToTouchLocation);
 	InputComponent->BindTouch(EInputEvent::IE_Repeat, this, &ANodePlayerController::MoveToTouchLocation);
@@ -138,20 +135,5 @@ void ANodePlayerController::OnSetDestinationReleased()
 {
 	// clear flag to indicate we should stop updating the destination
 	bMoveToMouseCursor = false;
-}
-
-void ANodePlayerController::onMouseRBClick()
-{
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("onMouseRBClick"));
-
-	FHitResult HitResult;
-	GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility, true, HitResult);
-
-	if (HitResult.bBlockingHit)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, *(HitResult.GetActor()->GetFName().ToString()));
-		//this->myTestEvents->onMouseRBClick.Broadcast(HitResult.GetActor());
-	}
-
 }
 

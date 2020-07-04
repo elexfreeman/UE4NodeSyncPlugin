@@ -70,6 +70,5 @@ protected:
 	void OnSetDestinationPressed();
 	void OnSetDestinationReleased();
 
-	void onMouseRBClick();
 	
 };

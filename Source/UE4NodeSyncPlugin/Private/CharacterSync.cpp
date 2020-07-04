@@ -56,7 +56,7 @@ bool UCharacterSync::fSimpleMoveToLocation(AController* Controller, const FVecto
 	if (!bOk) { return bOk; }
 
 	// send to srv
-	FString sMsg = TEXT("{}");
+	FString sMsg = TEXT("{'movetoloc': 1}");
 	vNodeSocketAC->EmitStr(sMsg);
 
 	// moving
