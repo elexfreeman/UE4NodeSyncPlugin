@@ -15,6 +15,12 @@ UCharacterSync* UCharacterSync::fInitNodeSocket(UNodeSocketAC* _vNodeSocketAC)
 	return this;
 }
 
+UCharacterSync* UCharacterSync::fInitToken(FString _sAuthToken)
+{
+	sAuthToken = _sAuthToken;
+	return this;
+}
+
 UPathFollowingComponent* UCharacterSync::InitNavigationControl(AController& Controller)
 {
 	AAIController* AsAIController = Cast<AAIController>(&Controller);
@@ -56,8 +62,8 @@ bool UCharacterSync::fSimpleMoveToLocation(AController* Controller, const FVecto
 	if (!bOk) { return bOk; }
 
 	// send to srv
-	FString sMsg = TEXT("{'movetoloc': 1}");
-	vNodeSocketAC->EmitStr(sMsg);
+	fSendMoveToLoc(GoalLocation);
+	
 
 	// moving
 
@@ -104,4 +110,24 @@ bool UCharacterSync::fSimpleMoveToLocation(AController* Controller, const FVecto
 
 	return bOk;
 
+}
+
+
+void UCharacterSync::fSendMoveToLoc(const FVector& GoalLocation)
+{
+	TSharedPtr<FJsonObject> request = MakeShareable(new FJsonObject);
+	TSharedPtr<FJsonObject> data = MakeShareable(new FJsonObject);
+
+	data->SetObjectField("loc", UNodeJsonHelper::fMakeVector(GoalLocation));
+
+	request->SetStringField("sClientToken", FString(TEXT("")));
+	request->SetStringField("sRoute", FString(TEXT("client_move_to_loc")));
+
+	request->SetObjectField("data", data);
+
+	FString sMsg;
+	TSharedRef< TJsonWriter<> > Writer = TJsonWriterFactory<>::Create(&sMsg);
+	FJsonSerializer::Serialize(request.ToSharedRef(), Writer);
+
+	vNodeSocketAC->EmitStr(sMsg);
 }

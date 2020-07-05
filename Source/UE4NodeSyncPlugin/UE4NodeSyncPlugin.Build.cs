@@ -26,7 +26,9 @@ public class UE4NodeSyncPlugin : ModuleRules
 			new string[]
 			{
 				"Core",
-				"NavigationSystem", "AIModule", "HeadMountedDisplay"
+				"NavigationSystem", "AIModule", "HeadMountedDisplay",
+				"JsonUtilities",
+				"Json"
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);

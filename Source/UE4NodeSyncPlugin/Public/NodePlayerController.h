@@ -7,6 +7,7 @@
 #include "NodeSocketAC.h"
 #include "./CharacterSync.h"
 #include "./TopDownCharacter.h"
+#include "./NodeRouter.h"
 
 #include "NodePlayerController.generated.h"
 
@@ -26,6 +27,7 @@ public:
 	UNodeSocketAC* vNodeSocketAC;
 
 	UCharacterSync* vCharacterSync;
+	UNodeRouter* vNodeRouter;
 
 	// --------------------------------------------
 	//					Network
